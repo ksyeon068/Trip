@@ -1,0 +1,23 @@
+@import './variables';
+@import './mixins';
+@import './reset';
+@import './layout';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+body{
+  font-family:'Roboto', sans-serif;
+}
+
+
+/* 공통 버튼 */
+
+.btn {
+  @include button;
+}
+
+/* 카드 */
+
+.card {
+  @include card;
+  padding: 20px;
+}
