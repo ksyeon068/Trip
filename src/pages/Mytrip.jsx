@@ -1,10 +1,23 @@
 import React, { useContext } from "react";
 import { TripContext } from "../context/TripContext";
+import { AuthContext } from "../context/AuthContext"; // 로그인 상태
 import { Link } from "react-router-dom";
 import "../styles/Mytrip.scss";
+import { HiPaperAirplane } from "react-icons/hi";
 
 const MyTrip = () => {
-  const { trips, deleteTrip } = useContext(TripContext);
+  const { trips, deleteTrip, loading } = useContext(TripContext);
+  const { user } = useContext(AuthContext); // 로그인 유저
+
+  // 🔥 trips 불러오는 중이면 로딩 표시 (새로고침 문제 해결 핵심)
+  if (loading) {
+    return (
+      <div className="mytrip-container">
+        <h1>My Trip</h1>
+        <p>여행 목록 불러오는 중...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mytrip-container">
@@ -12,12 +25,18 @@ const MyTrip = () => {
 
       {trips.length === 0 ? (
         <div className="empty-trip">
-          <img src="/img/empty-trip.jpg" alt="No Trip" />
+          <img src="/img/empty-trip.svg" alt="No Trip" />
           <h2>아직 저장된 여행이 없습니다.</h2>
-          <p>로그인 후 여행을 추가해보세요 ✈️</p>
-          <Link to="/login" className="login-btn">
-            로그인 하러가기
-          </Link>
+
+          {/* 🔥 로그인 안했을 때만 로그인 안내 */}
+          {!user && (
+            <>
+              <p>로그인 후 여행을 추가해보세요 ✈️</p>
+              <Link to="/login" className="login-btn">
+                로그인 하러가기
+              </Link>
+            </>
+          )}
         </div>
       ) : (
         <ul className="trip-list">
@@ -31,6 +50,10 @@ const MyTrip = () => {
                 <h3>{trip.name}</h3>
                 <p>{trip.country}</p>
               </div>
+
+              <button onClick={() => deleteTrip(trip.id)}>
+                삭제
+              </button>
             </li>
           ))}
         </ul>

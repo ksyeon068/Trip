@@ -5,14 +5,37 @@
   gap: 50px;
 }
 
+.profile-content{
+   flex: 1;                 /* 남은 공간 전부 사용 */
+  display: flex;
+  justify-content: space-between;  /* 일정 간격 분배 */
+  gap: 30px;
+}
+.profile-section {
+  flex: 1;                 /* 같은 너비로 */
+  min-width: 0;            /* flex overflow 방지 */
+}
+
 /* 카드 */
 .profile-page .profile-card {
   width: 320px;
-  padding: 30px;
+  padding: 20px;
   border-radius: 12px;
   background: white;
   box-shadow: 0 5px 20px rgba(0,0,0,0.08);
   text-align: center;
+  
+  /* .useName{
+    position: absolute;
+    top: 40px;
+    right: 20px;
+  }
+  .useEmail{
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    font-size: 14px;
+  } */
 }
 
 /* 이미지 */
@@ -22,6 +45,7 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 15px;
+  
 }
 
 /* 입력 */

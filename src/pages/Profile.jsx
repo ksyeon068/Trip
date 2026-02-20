@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { TripContext } from "../context/TripContext";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import "../styles/profile.scss";
 
 const Profile = () => {
@@ -12,22 +13,30 @@ const Profile = () => {
 
   const [isEditing, setIsEditing] = useState(false);
 
-  // 🔥 실제 저장된 값
-  const [savedName, setSavedName] = useState(user?.displayName || "");
-  const [savedPhoto, setSavedPhoto] = useState(user?.photoURL || "/default-profile.png");
+  const [savedName, setSavedName] = useState("");
+  const [savedPhoto, setSavedPhoto] = useState("/img/default-profile.jpg");
 
-  // 🔥 수정중 임시값
-  const [editName, setEditName] = useState(savedName);
-  const [editPhoto, setEditPhoto] = useState(savedPhoto);
+  const [editName, setEditName] = useState("");
+  const [editPhoto, setEditPhoto] = useState("/img/default-profile.jpg");
   const [selectedFile, setSelectedFile] = useState(null);
 
-  // 🔥 커뮤니티 글
   const [myPosts, setMyPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
 
-  // =========================
-  // 🔥 커뮤니티 글 가져오기
-  // =========================
+  // ⭐⭐⭐ 로그인 유저 정보 들어오면 state 동기화 ⭐⭐⭐
+  useEffect(() => {
+    if (!user) return;
+
+    const name = user.displayName || "";
+    const photo = user.photoURL || "/img/default-profile.jpg";
+
+    setSavedName(name);
+    setSavedPhoto(photo);
+    setEditName(name);
+    setEditPhoto(photo);
+  }, [user]);
+
+  // 커뮤니티 글 가져오기
   useEffect(() => {
     if (!user) return;
 
@@ -48,28 +57,25 @@ const Profile = () => {
 
   if (!user) return <div className="profile-page">로그인 필요</div>;
 
-  // =========================
-  // 🔥 이미지 선택 (미리보기만)
-  // =========================
+  // 이미지 선택
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     setSelectedFile(file);
-    setEditPhoto(URL.createObjectURL(file)); // 미리보기만
+    setEditPhoto(URL.createObjectURL(file)); // 미리보기
   };
 
-  // =========================
-  // 🔥 저장
-  // =========================
+  // ⭐⭐⭐ 핵심 저장 ⭐⭐⭐
   const handleSave = async () => {
     try {
-      // TODO: Firebase Storage 업로드 넣을 위치
       let finalPhoto = savedPhoto;
 
+      // 새 이미지 선택했으면 Storage 업로드
       if (selectedFile) {
-        // 지금은 임시로 base64 저장 (Storage 쓰면 교체)
-        finalPhoto = editPhoto;
+        const fileRef = ref(storage, `profile/${user.uid}`);
+        await uploadBytes(fileRef, selectedFile);
+        finalPhoto = await getDownloadURL(fileRef);
       }
 
       await updateProfile(user, {
@@ -79,8 +85,9 @@ const Profile = () => {
 
       setSavedName(editName);
       setSavedPhoto(finalPhoto);
-      setIsEditing(false);
+      setEditPhoto(finalPhoto);
       setSelectedFile(null);
+      setIsEditing(false);
 
       alert("프로필 저장 완료");
     } catch (err) {
@@ -88,10 +95,6 @@ const Profile = () => {
       alert("저장 실패");
     }
   };
-
-  // =========================
-  // 🔥 취소
-  // =========================
   const handleCancel = () => {
     setEditName(savedName);
     setEditPhoto(savedPhoto);
@@ -101,11 +104,13 @@ const Profile = () => {
 
   return (
     <div className="profile-page">
-
-      {/* ================= 프로필 카드 ================= */}
       <div className="profile-card">
-
-        <img src={isEditing ? editPhoto : savedPhoto} className="profile-avatar" />
+        <img
+          src={isEditing ? editPhoto : savedPhoto}
+          className="profile-avatar"
+          alt="profile"
+          onError={(e)=> e.target.src="/img/default-profile.jpg"}
+        />
 
         {isEditing && (
           <input type="file" onChange={handleImageChange} />
@@ -117,10 +122,10 @@ const Profile = () => {
             onChange={(e)=>setEditName(e.target.value)}
           />
         ) : (
-          <h2>{savedName}</h2>
+          <h2 className="useName">{savedName}</h2>
         )}
 
-        <p>{user.email}</p>
+        <p className="useEmail">{user.email}</p>
 
         {isEditing ? (
           <div>
@@ -132,40 +137,36 @@ const Profile = () => {
         )}
       </div>
 
-      {/* ================= 내 여행 ================= */}
-      <div className="profile-section">
-        <h3>내 여행 목록</h3>
-
-        {trips?.map(trip => (
-          <div key={trip.id} className="trip-card">
-            <img src={trip.image} />
-            <span>{trip.name}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* ================= 내가 쓴 글 ================= */}
-      <div className="profile-section">
-        <h3>내가 쓴 글</h3>
-
-        {myPosts.map(post => (
-          <div key={post.id} className="post-card">
-            <strong>{post.title}</strong>
-            <p>{post.content}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* ================= 좋아요 글 ================= */}
-      <div className="profile-section">
-        <h3>좋아요 누른 글</h3>
-
-        {likedPosts.map(post => (
-          <div key={post.id} className="post-card">
-            <strong>{post.title}</strong>
-            <p>{post.content}</p>
-          </div>
-        ))}
+      <div className="profile-content">
+        <div className="profile-section">
+          <h3>내 여행 목록</h3>
+          {trips?.map(trip => (
+            <div key={trip.id} className="trip-card">
+              <img src={trip.image} alt="" />
+              <span>{trip.name}</span>
+            </div>
+          ))}
+        </div>
+  
+        <div className="profile-section">
+          <h3>내가 쓴 글</h3>
+          {myPosts.map(post => (
+            <div key={post.id} className="post-card">
+              <strong>{post.title}</strong>
+              <p>{post.content}</p>
+            </div>
+          ))}
+        </div>
+  
+        <div className="profile-section">
+          <h3>좋아요 누른 글</h3>
+          {likedPosts.map(post => (
+            <div key={post.id} className="post-card">
+              <strong>{post.title}</strong>
+              <p>{post.content}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
     </div>

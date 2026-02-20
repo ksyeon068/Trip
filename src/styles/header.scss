@@ -30,7 +30,7 @@ header{
         position: absolute;
         right: 30px;
         top: 10px;
-        font-size: 12px;
+        font-size: 11px;
         a{
             margin-left: 15px;
             color:$gray;
@@ -41,6 +41,7 @@ header{
             color: $primary;
              border-radius: 4px;
              position: relative;
+             font-size: 11px;
         }
         .in{
             display: flex;
