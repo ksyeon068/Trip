@@ -1,0 +1,26 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /users/{userId}/trips/{tripId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+     match /community/{docId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow delete, update: if request.auth.uid == resource.data.uid;
+    }
+    match /community/{postId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null 
+                            && request.auth.uid == resource.data.uid;
+
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if request.auth != null;
+      }
+    }
+  }
+}

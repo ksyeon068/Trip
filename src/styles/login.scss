@@ -1,4 +1,4 @@
-@import '../styles/variables.scss';
+@use '../styles/variables.scss' as*;
 .login{
     width: 800px;
     margin: 100px auto;

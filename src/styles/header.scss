@@ -1,6 +1,7 @@
-@import './variables';
-@import './mixins';
+@use './variables.scss' as*;
+@use './mixins.scss' as*;
 header{
+    position: relative;
     padding: 20px 30px;
     background-color: $white;
     border-bottom: 1px solid $light-gray;
@@ -38,7 +39,6 @@ header{
             background: none;
             border:none;
             color: $primary;
-
              border-radius: 4px;
              position: relative;
         }

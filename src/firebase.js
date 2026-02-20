@@ -1,15 +1,15 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCrQ0rPUNBTxwYGsT9B6-nx2diqMbSIXv0",
-  authDomain: "mytrip-59dbc.firebaseapp.com",
-  databaseURL: "https://mytrip-59dbc-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "mytrip-59dbc",
-  storageBucket: "mytrip-59dbc.firebasestorage.app",
-  messagingSenderId: "889596162946",
-  appId: "1:889596162946:web:fc7f7452938ece4aaa959b",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
   measurementId: "G-HBDNVR4RCL"
 };
 
@@ -18,3 +18,4 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const provider = new GoogleAuthProvider();
+export const storage = getStorage(app);

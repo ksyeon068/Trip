@@ -1,7 +1,7 @@
-@import './variables';
-@import './mixins';
-@import './reset';
-@import './layout';
+@use './variables' as *;
+@use './mixins' as *;
+@use './reset' as *;
+@use './layout' as *;
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 body{

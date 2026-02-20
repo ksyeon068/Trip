@@ -1,0 +1,79 @@
+.profile-page {
+  max-width: 1280px;
+  margin: 50px auto;
+  display: flex;
+  gap: 50px;
+}
+
+/* 카드 */
+.profile-page .profile-card {
+  width: 320px;
+  padding: 30px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+/* 이미지 */
+.profile-page .profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+/* 입력 */
+.profile-page .profile-input {
+  padding: 8px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+/* 버튼 */
+.profile-page button {
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #3498db;
+  color: white;
+  cursor: pointer;
+}
+
+.profile-page .profile-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* 여행 목록 */
+.profile-page .profile-trips {
+  width: 320px;
+}
+
+.profile-page ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+.trip-card{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin:10px 0;
+}
+
+.trip-card img{
+  width:60px;
+  height:60px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.post-card{
+  padding:10px;
+  border:1px solid #eee;
+  margin:10px 0;
+  border-radius:8px;
+}
