@@ -1,5 +1,6 @@
+@use './variables.scss' as*;
 .explore-detail {
-  max-width: 900px;
+  max-width: 50%;
   margin: 0 auto;
   padding: 40px;
 
@@ -22,11 +23,47 @@
 
 .info{
   li{
-    line-height: 150%;
+    line-height: 160%;
     strong{
       display: inline-block;
       width: 80px;
       font-weight: 600;
+    }
+    .weblink{
+      font-size: 15px;
+      &:hover{
+        text-decoration: underline;
+        color: $primary;
+      }
+    }
+  }
+}
+@media screen and (max-width: 1290px) {
+  .info{
+    li{
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 8px;
+      strong{
+        margin-bottom: 3px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 960px) {
+  .explore-detail{max-width: 60%;}
+}
+@media screen and (max-width: 560px) {
+  .explore-detail{max-width: 80%;}
+  .info{
+    li{
+      line-height: 120%;
+      strong{
+        font-size: 14px;
+      }
+      span{
+        font-size: 12px;
+      }
     }
   }
 }

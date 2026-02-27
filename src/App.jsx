@@ -13,6 +13,8 @@ import Footer from './components/Footer.jsx'
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx"
 import ExploreDetail from './components/ExploreDetail.jsx'
+import Loading from "./components/Loading";
+
 
 import './App.scss'
 
@@ -22,7 +24,6 @@ export const TravelContext = createContext({
 });
 
 function App() {
-
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,6 +39,9 @@ function App() {
   }, []);
 
 
+
+
+  if (loading) return <Loading />;
   return (
     <AuthProvider>
       <TripProvider>

@@ -3,7 +3,6 @@ import { TripContext } from "../context/TripContext";
 import { AuthContext } from "../context/AuthContext"; // 로그인 상태
 import { Link } from "react-router-dom";
 import "../styles/Mytrip.scss";
-import { HiPaperAirplane } from "react-icons/hi";
 
 const MyTrip = () => {
   const { trips, deleteTrip, loading } = useContext(TripContext);

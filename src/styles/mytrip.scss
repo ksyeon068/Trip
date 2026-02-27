@@ -11,6 +11,7 @@
     margin-top: 20px;
     margin-bottom: 40px;
     text-align: center;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
   }
 
   /* 실제 콘텐츠 위로 */
@@ -26,7 +27,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 0.6);
   z-index: 1;
 }
 
@@ -73,11 +74,12 @@
   h3 {
     margin-bottom: 6px;
     font-size: 18px;
+    color: #333;
   }
 
   p {
     font-size: 14px;
-    color: #ddd;
+    color: #8f8f8f;
   }
 
   button {

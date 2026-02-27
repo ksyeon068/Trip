@@ -31,29 +31,6 @@ const Community = () => {
 
   const communityRef = collection(db, "community");
 
-  // 🔥 게시글 가져오기 (최신순)
-  /* const getPosts = async () => {
-    const q = query(communityRef, orderBy("createdAt", "desc"));
-    const data = await getDocs(q);
-
-    const postData = await Promise.all(
-      data.docs.map(async (d) => {
-        const commentsRef = collection(db, "community", d.id, "comments");
-        const commentsSnap = await getDocs(commentsRef);
-
-        return {
-          ...d.data(),
-          id: d.id,
-          comments: commentsSnap.docs.map(c => ({
-            ...c.data(),
-            id: c.id
-          }))
-        };
-      })
-    );
-
-    setPosts(postData);
-  }; */
 
   useEffect(() => {
   const q = query(communityRef, orderBy("createdAt", "desc"));
