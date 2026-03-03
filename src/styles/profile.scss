@@ -4,10 +4,12 @@
   margin: 50px auto;
   display: flex;
   gap: 50px;
+  height: 60vh;
+  padding: 0 40px;
 }
 
 .profile-content{
-   flex: 1;                 /* 남은 공간 전부 사용 */
+  flex: 1;                 /* 남은 공간 전부 사용 */
   display: flex;
   justify-content: space-between;  /* 일정 간격 분배 */
   gap: 30px;
@@ -19,12 +21,21 @@
 
 /* 카드 */
 .profile-page .profile-card {
-  width: 320px;
-  padding: 20px;
+  width: 300px;
+  padding: 30px;
+  height: 300px;
   border-radius: 12px;
   background: white;
   box-shadow: 0 5px 20px rgba(0,0,0,0.08);
   text-align: center;
+    .profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 30px;
+    display: block;
+  }
   
   /* .useName{
     position: absolute;
@@ -40,14 +51,7 @@
 }
 
 /* 이미지 */
-.profile-page .profile-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 15px;
-  
-}
+
 
 /* 입력 */
 .profile-page .profile-input {
@@ -86,7 +90,7 @@
   display:flex;
   gap:10px;
   align-items:center;
-  margin:10px 0;
+  margin:20px 0;
 }
 
 .trip-card img{
@@ -99,20 +103,33 @@
 .post-card{
   padding:10px;
   border:1px solid #ddd;
-  margin:10px 0;
+  margin:20px 0;
   border-radius:8px;
 }
 
 
 @media screen and (max-width: 1290px) {
-
+  .profile-page{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+  }
 }
 @media screen and (max-width: 960px) {
-  
+  .profile-page{
+    grid-template-columns: repeat(2, 1fr);
+    height: auto;
+  }
 }
 @media screen and (max-width: 720px) {
   
 }
 @media screen and (max-width: 560px) {
-  
+  .profile-page{
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0 40px;
+    .profile-card{
+      margin: 0 auto;
+    }
+  }
 }

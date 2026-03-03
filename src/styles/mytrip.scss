@@ -3,7 +3,7 @@
 ========================= */
 .mytrip-container {
   position: relative;
-  min-height: 90vh;
+  min-height: 100vh;
   padding: 60px 20px 40px 20px;
   background: url("../img/bg1.jpg") center / cover no-repeat;
 
@@ -22,7 +22,7 @@
   }
 }
 
-/* 어두운 오버레이 */
+/* 밝은 오버레이 */
 .mytrip-container::before {
   content: "";
   position: absolute;

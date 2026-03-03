@@ -136,39 +136,35 @@ const Profile = () => {
           <button onClick={()=>setIsEditing(true)}>프로필 수정</button>
         )}
       </div>
-
-      <div className="profile-content">
-        <div className="profile-section">
-          <h3>내 여행 목록</h3>
-          {trips?.map(trip => (
-            <div key={trip.id} className="trip-card">
-              <img src={trip.image} alt="" />
-              <span>{trip.name}</span>
-            </div>
-          ))}
-        </div>
-  
-        <div className="profile-section">
-          <h3>내가 쓴 글</h3>
-          {myPosts.map(post => (
-            <div key={post.id} className="post-card">
-              <strong>{post.title}</strong>
-              <p>{post.content}</p>
-            </div>
-          ))}
-        </div>
-  
-        <div className="profile-section">
-          <h3>좋아요 누른 글</h3>
-          {likedPosts.map(post => (
-            <div key={post.id} className="post-card">
-              <strong>{post.title}</strong>
-              <p>{post.content}</p>
-            </div>
-          ))}
-        </div>
+      <div className="profile-section">
+        <h3>내 여행 목록</h3>
+        {trips?.map(trip => (
+          <div key={trip.id} className="trip-card">
+            <img src={trip.image} alt="" />
+            <span>{trip.name}</span>
+          </div>
+        ))}
       </div>
 
+      <div className="profile-section">
+        <h3>내가 쓴 글</h3>
+        {myPosts.map(post => (
+          <div key={post.id} className="post-card">
+            <strong>{post.title}</strong>
+            <p>{post.content}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="profile-section">
+        <h3>좋아요 누른 글</h3>
+        {likedPosts.map(post => (
+          <div key={post.id} className="post-card">
+            <strong>{post.title}</strong>
+            <p>{post.content}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
