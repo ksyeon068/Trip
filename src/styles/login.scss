@@ -63,3 +63,14 @@
         }
     }
 }
+
+@media screen and (max-width: 960px) {
+  .login{
+    width: 500px;
+    }
+}
+@media screen and (max-width: 560px) {
+    .login{
+    width: 300px;
+    }
+}

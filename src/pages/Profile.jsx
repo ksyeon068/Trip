@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { TripContext } from "../context/TripContext";
 import { db, storage } from "../firebase";
@@ -23,7 +24,7 @@ const Profile = () => {
   const [myPosts, setMyPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
 
-  // ⭐⭐⭐ 로그인 유저 정보 들어오면 state 동기화 ⭐⭐⭐
+  // 로그인 유저 정보 들어오면 state 동기화 
   useEffect(() => {
     if (!user) return;
 
@@ -55,7 +56,18 @@ const Profile = () => {
     fetchPosts();
   }, [user]);
 
-  if (!user) return <div className="profile-page">로그인 필요</div>;
+  if (!user)
+    return (
+    <div className="no-login">
+        <div className="empty-trip">
+          <img src="/img/empty-trip.svg" alt="Login Required" />
+          <h2>프로필을 보려면 로그인이 필요합니다.✈️</h2>
+          <Link to="/login" className="login-btn">
+            로그인 하러가기
+          </Link>
+        </div>
+      </div>
+    )
 
   // 이미지 선택
   const handleImageChange = (e) => {
@@ -66,7 +78,7 @@ const Profile = () => {
     setEditPhoto(URL.createObjectURL(file)); // 미리보기
   };
 
-  // ⭐⭐⭐ 핵심 저장 ⭐⭐⭐
+  // 핵심 저장
   const handleSave = async () => {
     try {
       let finalPhoto = savedPhoto;
